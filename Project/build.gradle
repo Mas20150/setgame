@@ -1,0 +1,84 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.13'
+    id 'org.beryx.jlink' version '2.25.0'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    junitVersion = '5.10.0'
+}
+
+sourceCompatibility = '17'
+targetCompatibility = '17'
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+application {
+    mainModule = 'org.example.setgame'
+    mainClass = 'org.example.setgame.HelloApplication'
+}
+
+javafx {
+    version = '17.0.6'
+    modules = ['javafx.controls', 'javafx.fxml', 'javafx.web', 'javafx.swing', 'javafx.media']
+}
+
+dependencies {
+    implementation('org.hibernate:hibernate-core:6.3.1.Final')
+    implementation('org.glassfish.jaxb:jaxb-runtime:4.0.3')
+
+    implementation('org.controlsfx:controlsfx:11.1.2')
+    implementation('org.kordamp.bootstrapfx:bootstrapfx-core:0.4.0')
+    // https://mvnrepository.com/artifact/org.postgresql/postgresql
+    implementation 'org.postgresql:postgresql:42.7.3'
+    // https://mvnrepository.com/artifact/org.jboss.logging/jboss-logging
+    implementation 'org.jboss.logging:jboss-logging:3.5.3.Final'
+
+    // https://mvnrepository.com/artifact/jakarta.enterprise/jakarta.enterprise.cdi-api
+    implementation 'jakarta.enterprise:jakarta.enterprise.cdi-api:4.1.0'
+// https://mvnrepository.com/artifact/com.fasterxml/classmate
+    implementation 'com.fasterxml:classmate:1.5.1'
+    // https://mvnrepository.com/artifact/org.hibernate.common/hibernate-commons-annotations
+    implementation 'org.hibernate.common:hibernate-commons-annotations:6.0.6.Final'
+// https://mvnrepository.com/artifact/net.bytebuddy/byte-buddy
+    implementation 'net.bytebuddy:byte-buddy:1.14.7'
+
+
+
+
+    compileOnly 'org.projectlombok:lombok:1.18.32'
+    annotationProcessor 'org.projectlombok:lombok:1.18.32'
+
+    testCompileOnly 'org.projectlombok:lombok:1.18.32'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.32'
+
+    testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
+}
+
+test {
+    useJUnitPlatform()
+}
+
+jlink {
+    imageZip = project.file("${buildDir}/distributions/app-${javafx.platform.classifier}.zip")
+    options = ['--strip-debug', '--compress', '2', '--no-header-files', '--no-man-pages']
+    moduleName = 'org.example.setgame'
+    launcher {
+        name = 'app'
+    }
+}
+
+jlinkZip {
+    group = 'distribution'
+}
