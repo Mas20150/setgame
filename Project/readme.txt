@@ -1,4 +1,4 @@
-🃏 SET Game – Java Implementation
+## 🃏 SET Game – Java Implementation
 
 Willkommen zu unserer digitalen Version des beliebten Kartenspiels **SET®**, das die visuelle Wahrnehmung und Reaktionsfähigkeit herausfordert. Dieses Projekt wurde in Java entwickelt und basiert auf den offiziellen Spielregeln von SET®.
 
